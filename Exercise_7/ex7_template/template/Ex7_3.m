@@ -1,14 +1,6 @@
 clear; close all;
-addpath('plottingcode')
 import casadi.*
-
-car_dynamics
-
-%%%%% REMOVE
-% h = 0.1;
-h = 0.025;
-f_discrete = @(x,u) RK4(x,u,h,f);
-%%%%% REMOVE
+addpath('./plottingcode')
 
 car_dynamics
 
@@ -42,23 +34,17 @@ opti.minimize(...
   10*U(2,:)*U(2,:)'   + ... % Minimize braking
   10000*(epsilon_speed(1,:)*epsilon_speed(1,:)' + sum(epsilon_speed))); % Soft constraints
 
-% % Minimize braking
-% opti.minimize(...
-%   -10*sum(X(2,:))  + ... % Max velocity
-%   0.1*U(1,:)*U(1,:)' + ... % Minimize accel
-%   1000*U(2,:)*U(2,:)'   + ... % Minimize braking
-%   10000*(epsilon_speed(1,:)*epsilon_speed(1,:)' + sum(epsilon_speed))); % Soft constraints
-
 
 % ---- multiple shooting --------
 for k=1:N % loop over control intervals
-  
-  %%%%% REMOVE
-  opti.subject_to(X(:,k+1) == f_discrete(X(:,k), U(:,k)));
-  %%%%% REMOVE
-  
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   %%%% WRITE YOUR DYNAMICS CONSTRAINT HERE
-  %   opti.subject_to( ... );
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  opti.subject_to(  );
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%% WRITE YOUR DYNAMICS CONSTRAINT HERE
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   
 end
 
